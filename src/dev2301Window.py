@@ -60,6 +60,7 @@ class Dev2301Window(wx.Window):
         """
         wx.Window.__init__(self, parent)
         self.SetBackgroundColour("White")
+        
 
         self.parent = parent
         self.top = top

@@ -23,12 +23,18 @@
 ##############################################################################
 # Lib imports
 import wx
+# import request
+import autoupdate
 
 ##############################################################################
 # GLOBAL VARIABLES
 ##############################################################################
 APP_NAME = "Cricket"
-APP_VERSION = "4.0.0"
+APP_VERSION = "4.1.0"
+
+UPDATE_VERSION = "v" + APP_VERSION
+print(UPDATE_VERSION)
+
 
 # StatusBar ID
 SB_PORT_ID   = 0
@@ -215,9 +221,38 @@ VERSION_COPY  = "\nCopyright "+u"\u00A9"+" 2020-23\nMCCI Corporation"
 VERSION_STR = "Version "+APP_VERSION
 
 
+
 ##############################################################################
 # GLOBAL FUNCTIONS
 ##############################################################################
+def check_version():
+    app = wx.App(False)
+    print("new version avaliblle")
+    repo_owner = "vinaynmcci"
+    repo_name = "Cricket"
+    access_token = "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"
+    latest_version = autoupdate.check_for_update(repo_owner, repo_name, access_token)
+
+    dlg = wx.Dialog(None, title="Cricket UI")
+    update_info = wx.StaticText(dlg, label="You are using the latest version.", style=wx.ALIGN_CENTER)
+
+    if UPDATE_VERSION:
+        if latest_version  > UPDATE_VERSION:
+            pass
+        
+        # if UPDATE_VERSION > latest_version:
+            # update_info.SetLabel(f"A new version ({latest_version}) is available! Click OK to update.")
+            
+        else:
+            # update_info.SetLabel("You are using the latest version.")
+            update_info.SetLabel(f"A new version ({UPDATE_VERSION}) is available! Click OK to update.")
+    
+    dlg.SetSize(300, 150)
+    dlg.ShowModal()
+    dlg.Destroy()
+    app.MainLoop()
+# check_version()
+
 class NumericValidator(wx.Validator):
     """
     Validator associated NumericValidator Control.
@@ -235,6 +270,13 @@ class NumericValidator(wx.Validator):
         """
         wx.Validator.__init__(self)
         self.Bind(wx.EVT_CHAR, self.OnChar)
+    
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+#     check_version()
+    
+    
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     def Clone(self, arg=None):
         """
@@ -292,3 +334,13 @@ class NumericValidator(wx.Validator):
         if chr(key).isdigit():
             evt.Skip()
             return
+
+
+# if __name__ == "__main__":
+#     validator = NumericValidator()
+#     validator.check_version()
+
+if __name__ == "__main__":
+    app = wx.App(False)  # Initialize the wx.App instance
+    check_version()
+    app.MainLoop()
