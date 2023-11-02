@@ -30,7 +30,7 @@ import autoupdate
 # GLOBAL VARIABLES
 ##############################################################################
 APP_NAME = "Cricket"
-APP_VERSION = "4.1.0"
+APP_VERSION = "4.2.0"
 
 UPDATE_VERSION = "v" + APP_VERSION
 print(UPDATE_VERSION)
